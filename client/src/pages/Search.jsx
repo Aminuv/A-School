@@ -31,8 +31,6 @@ export default function Search() {
     if (
       searchTermFromUrl ||
       typeFromUrl ||
-      parkingFromUrl ||
-      furnishedFromUrl ||
       offerFromUrl ||
       sortFromUrl ||
       orderFromUrl
@@ -40,8 +38,6 @@ export default function Search() {
       setSidebardata({
         searchTerm: searchTermFromUrl || '',
         type: typeFromUrl || 'all',
-        parking: parkingFromUrl === 'true' ? true : false,
-        furnished: furnishedFromUrl === 'true' ? true : false,
         offer: offerFromUrl === 'true' ? true : false,
         sort: sortFromUrl || 'created_at',
         order: orderFromUrl || 'desc',
@@ -80,8 +76,6 @@ export default function Search() {
     }
 
     if (
-      e.target.id === 'parking' ||
-      e.target.id === 'furnished' ||
       e.target.id === 'offer'
     ) {
       setSidebardata({
@@ -105,8 +99,6 @@ export default function Search() {
     const urlParams = new URLSearchParams();
     urlParams.set('searchTerm', sidebardata.searchTerm);
     urlParams.set('type', sidebardata.type);
-    urlParams.set('parking', sidebardata.parking);
-    urlParams.set('furnished', sidebardata.furnished);
     urlParams.set('offer', sidebardata.offer);
     urlParams.set('sort', sidebardata.sort);
     urlParams.set('order', sidebardata.order);
@@ -124,8 +116,8 @@ export default function Search() {
     const data = await res.json();
     if (data.length < 9) {
       setShowMore(false);
-    }
-    setListings([...listings, ...data]);
+    } 
+    setListings([...course, ...data]);
   };
   return (
     <div className='flex flex-col md:flex-row'>
@@ -154,7 +146,7 @@ export default function Search() {
                 onChange={handleChange}
                 checked={sidebardata.type === 'all'}
               />
-              <span>Rent & Sale</span>
+              <span>VIP & GROUP</span>
             </div>
             <div className='flex gap-2'>
               <input
@@ -164,7 +156,7 @@ export default function Search() {
                 onChange={handleChange}
                 checked={sidebardata.type === 'rent'}
               />
-              <span>Rent</span>
+              <span>GROUP</span>
             </div>
             <div className='flex gap-2'>
               <input
@@ -174,7 +166,7 @@ export default function Search() {
                 onChange={handleChange}
                 checked={sidebardata.type === 'sale'}
               />
-              <span>Sale</span>
+              <span>VIP</span>
             </div>
             <div className='flex gap-2'>
               <input
@@ -189,26 +181,6 @@ export default function Search() {
           </div>
           <div className='flex gap-2 flex-wrap items-center'>
             <label className='font-semibold'>Amenities:</label>
-            <div className='flex gap-2'>
-              <input
-                type='checkbox'
-                id='parking'
-                className='w-5'
-                onChange={handleChange}
-                checked={sidebardata.parking}
-              />
-              <span>Parking</span>
-            </div>
-            <div className='flex gap-2'>
-              <input
-                type='checkbox'
-                id='furnished'
-                className='w-5'
-                onChange={handleChange}
-                checked={sidebardata.furnished}
-              />
-              <span>Furnished</span>
-            </div>
           </div>
           <div className='flex items-center gap-2'>
             <label className='font-semibold'>Sort:</label>
@@ -231,7 +203,7 @@ export default function Search() {
       </div>
       <div className='flex-1'>
         <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>
-          Listing results:
+        Discover Your Courses with Search Results:
         </h1>
         <div className='p-7 flex flex-wrap gap-4'>
           {!loading && listings.length === 0 && (
