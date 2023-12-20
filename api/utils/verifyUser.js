@@ -6,10 +6,13 @@ export const verifyToken = (req, res, next) => {
 
   if (!token) return next(errorHandler(401, 'Unauthorized'));
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return next(errorHandler(403, 'Forbidden'));
-
-    req.user = user;
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      console.error('JWT verification failed:', err);
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+    req.user = decoded; // Set the decoded user information to req.user
     next();
   });
+
 };

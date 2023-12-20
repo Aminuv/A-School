@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { useSelector } from 'react-redux';
 import { Navigation } from 'swiper/modules';
+import PhoneIcon from '../components/PhoneIcon';
 import 'swiper/css/bundle';
 import {
   FaBath,
@@ -113,6 +114,10 @@ export default function Listing() {
             <p className='text-slate-800'>
               <span className='font-semibold text-black'> Description - </span>
               {listing.description}
+            </p>
+            <p className='text-slate-800'>
+              <span className='font-semibold text-black'> <PhoneIcon /> {''} </span>
+              {listing.phone}
             </p>
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button

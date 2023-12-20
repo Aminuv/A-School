@@ -21,9 +21,9 @@ export const deleteListing = async (req, res, next) => {
     return next(errorHandler(404, 'course not found!'));
   }
   //check if user is the owner of the course
-  // if (req.user.id !== listing.userRef) {
-  //   return next(errorHandler(401, 'You can only delete your own courses!'));
-  // }
+  if (req.user.id !== listing.userRef) {
+   return next(errorHandler(401, 'You can only delete your own courses!'));
+   }
   //delete course
   try {
     await Listing.findByIdAndDelete(req.params.id);
@@ -39,9 +39,9 @@ export const updateListing = async (req, res, next) => {
   if (!listing) {
     return next(errorHandler(404, 'course not found!'));
   }
-  // if (req.user.id !== listing.userRef) {
-  //   return next(errorHandler(401, 'You can only update your own courses!'));
-  // }
+  if (req.user.id !== listing.userRef) {
+      return next(errorHandler(401, 'You can only update your own courses!'));
+  }
 
   try {
     const updatedListing = await Listing.findByIdAndUpdate(
